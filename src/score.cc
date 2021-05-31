@@ -14,7 +14,7 @@ bool score::save(){
     return 1;
 }
 void score::init(mode m){
-    scoreDir="./data/score.txt";
+    scoreDir="../data/score.txt";
     std::ifstream is;
     is.open(scoreDir,std::ios::in);
     if(!is.is_open()){

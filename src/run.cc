@@ -1,13 +1,16 @@
 #include"../include/run.hpp"
 #include"../include/utility.hpp"
+#include<thread>
 #include<windows.h>
+#include<tchar.h>
+
     namespace snake{
     int winX=98;
     int winY=38;
     int borderxmin=4;
     int borderxmax=70;
-    int borderymin=3;
-    int borderymax=34;
+    int borderymin=5;
+    int borderymax=35;
     const char* squre="¡ö";
     const char* circle="¡ñ";
     const char* star="¡ï";
@@ -23,6 +26,7 @@ std::pair<int,int> runner::superEat(){
     auto p=superfood_.RetPos();
     superfood_.erase();
     score_.updatasup();
+    winMain.eraseBar();
     return p;
 }
 bool runner::willEat(){
@@ -114,7 +118,7 @@ void runner::generateFood(){
     food_.setPos(x,y);
 }
 void runner::generateSupFood(){
-    int mod6=rand()%20;
+    int mod6=rand()%108;
     int xmod=(xmax-xmin)/2;
     int ymod=(ymax-ymin)/2;
     if(mod6==3){
@@ -133,11 +137,21 @@ void runner::generateSupFood(){
             break;
         }
         superfood_.setPos(x,y);
+        winMain.showProBar();
     }
     return ;
 }
-
+void play_music(){
+   std:: fstream fs;
+   fs.open("../mp3/L.wav");
+   if(!fs.is_open()){
+       std::cerr<<"can't open mp3 files"<<std::endl;
+        exit(-1);
+   }
+    PlaySound(TEXT("../mp3/L.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+}
 void runner::play(){
+    play_music();
     greet.show();
     getch();
     while(1){
@@ -155,7 +169,7 @@ void runner::play(){
            case scene::choice::Kind::crazy :
            level=mode::crazy;break;
            case scene::choice::Kind::exit :
-                return ;
+        return ;
        }
        init();
        running();
@@ -254,6 +268,7 @@ void runner::running(){
         winMain.showfood(food_.RetPos().first,food_.RetPos().second);
     }  
     if(superfood_.isExited()){
+        winMain.enShortBar();
         if(willSuperEat()){
             auto pt=superEat();
             snake_.grow();

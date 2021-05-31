@@ -11,6 +11,7 @@ public:
     scene():titileCn("贪吃蛇"),titleEn("GreedySnake"),curScoretxt("当前分数"),instruct("按esc退出,空格暂停"),
                                 maxScoretxt("最高分数"),guarde("使用wasd进行移动"),
                                 maxScorePos({borderxmax+4,borderymin+12}),curScorePos({borderxmax+4,borderymin+15}){
+                                    colorV[0]=color::yellow;colorV[1]=color::green;colorV[2]=color::purple;colorV[3]=color::whilte;
 }
     void init(mode);//show border and tips
     void showborder();
@@ -18,12 +19,25 @@ public:
     void showfood(int x,int y);
     void showtips();
     void showBlank(int x,int y);
-   // void showProBar();
+    void showProBar();
     void showSuperf(int x,int y);
     void showCurScore(int v);
     void showMaxScore(int v);
     bool showIfAgain(int,int);
+    void enShortBar();
+    void eraseBar();
 private:
+    enum class color{
+        red=31,
+        green=32,
+        yellow=33,
+        blue=34,
+        purple=35,
+        whilte=97
+    };
+    int snkColorIndex=0;
+    std::array<color,4>colorV;
+    int startBarx;
     std::vector<std::pair<int,int>>posBorder;
     std::string level;
     std::pair<int,int>curScorePos;

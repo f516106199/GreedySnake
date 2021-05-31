@@ -6,4 +6,5 @@ int main(){
     system("color 0f");
     snake::run::runner G;
     G.play();
+    system("pause");
 }

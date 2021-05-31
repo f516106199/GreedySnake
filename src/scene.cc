@@ -28,22 +28,24 @@ void scene::init(mode m){
     else {
         level="Ò»°ã";
     }
+    snkColorIndex=0;
     showborder();
     showtips();
 }
 void scene::showborder(){
     for(const auto& m:posBorder){
-        std::cout<<"\033["<<m.second<<";"<<m.first<<"H\033[31m"<<squre<<"\033[0m\033[0;0H";
+        std::cout<<"\033["<<m.second<<";"<<m.first<<"H\033[32m"<<squre<<"\033[0m\033[0;0H";
     }
 }
 void scene::showsnake(int x,int y){
-    std::cout<<"\033["<<y<<";"<<x<<"H\033[32m"<<circle<<"\033[0m\033[0;0H";
+    snkColorIndex%=colorV.size();
+    std::cout<<"\033["<<y<<";"<<x<<"H\033["<<(int)colorV[snkColorIndex++]<<"m"<<circle<<"\033[0m\033[0;0H";
 }
 void scene::showfood(int x,int y){
     std::cout<<"\033["<<y<<";"<<x<<"H\033[37m"<<holestar<<"\033[0m\033[0;0H";
 }
 void scene::showSuperf(int x,int y){
-    std::cout<<"\033["<<y<<";"<<x<<"H\033[5;33;40m"<<star<<"\033[0m\033[0;0H";
+    std::cout<<"\033["<<y<<";"<<x<<"H\033[5;35;40m"<<star<<"\033[0m\033[0;0H";
 }
 void scene::showtips(){
     std::cout<<"\033["<<maxScorePos.second-7<<";"<<maxScorePos.first<<"H"<<titleEn;
@@ -56,9 +58,7 @@ void scene::showtips(){
     showCurScore(0);
     showMaxScore(0);
 }
-// void scene::showOver(){
 
-// }
 void scene::showBlank(int x,int y){
     std::cout<<"\033["<<y<<";"<<x<<"H"<<"  "<<"\033[0m\033[0;0H";
 }
@@ -105,10 +105,22 @@ bool scene::showIfAgain(int cur,int max){
     }
 }
 
-// void scene::showProBar(){
-
-// }
-
+void scene::showProBar(){
+    for(int i=borderxmin;i!=borderxmax+1;++i){
+        std::cout<<"\033["<<borderymin-3<<";"<<i<<"H\033[5;35;45m \033[?25l";
+    }
+    std::cout<<"\033[0m";
+    startBarx=borderxmin;
+}
+void scene:: enShortBar(){
+    std::cout<<"\033["<<borderymin-3<<";"<<startBarx++<<"H\033[0m \033[?25l";
+}
+void scene::eraseBar(){
+    for(int i=borderxmin;i!=borderxmax+1;++i){
+        std::cout<<"\033["<<borderymin-3<<";"<<i<<"H\033[0m \033[?25l";
+    }
+    startBarx=borderxmax;
+}
 choice::Kind choice::retChoice(){
     return kind;
 }

@@ -27,18 +27,19 @@ public:
     bool Timeover(){
         if(recordTime()>=showTime){
             isexited=0;
+            sTime=0;
             return 1;
         }
         return 0;
     }
     void erase(){
+        sTime=0;
         isexited=0;
     }
     virtual void setPos(int,int)override; 
-    superfood():food(),showTime(7000){}
+    superfood():food(),showTime(70){}
 private:
     int sTime;
-    int eTime;
     bool isexited;
     int showTime;
 };

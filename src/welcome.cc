@@ -136,7 +136,7 @@ void welcome::modiStatus_3(){
 }
 void welcome::readTxt(){
     std::ifstream is;
-    is.open("./data/preText.txt");
+    is.open("../data/preText.txt");
     if(!is.is_open()){
         std::cerr<<"lack of file preText.txt "<<std::endl;
         exit(-1);

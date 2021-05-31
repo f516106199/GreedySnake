@@ -11,11 +11,10 @@ void superfood::setPos(int x,int y){
     pos.first=x;
     pos.second=y;
     isexited=true;
-    sTime=clock();
+    sTime=0;
 }
 size_t superfood::recordTime(){
-    eTime=clock();
-    return eTime-sTime;
+    return ++sTime;
 }
 
 
